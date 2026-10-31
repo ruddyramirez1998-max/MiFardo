@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FBEFED"><meta name="robots" content="noindex">
+<title>Pago con QR</title><link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Onest:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}body{font:400 16px/1.55 "Onest","Segoe UI",system-ui,sans-serif;background:#FBEFED;color:#3B1E2A;min-height:100dvh;display:flex;justify-content:center;padding:24px 18px calc(32px + env(safe-area-inset-bottom));background-image:radial-gradient(50rem 24rem at 100% -10%,rgba(242,163,181,.35),transparent 70%)}
+main{width:100%;max-width:420px;text-align:center}.lg{width:84px;height:84px;border-radius:22px;margin-bottom:14px}
+.k{color:#7F5F6B;font-size:.9rem}h1{font:600 1.7rem/1.15 "Fraunces",Georgia,serif;letter-spacing:-.03em;overflow-wrap:anywhere}
+.am{font:600 3rem/1.1 "Fraunces",Georgia,serif;letter-spacing:-.04em;margin:10px 0 2px}
+.qr{background:#fff;border-radius:18px;padding:14px;margin:18px 0;box-shadow:0 1px 1px rgba(120,50,70,.05),0 12px 28px rgba(120,50,70,.08)}.qr img{width:100%;height:auto;display:block;image-rendering:pixelated}
+.b{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;background:#C93E63;color:#fff;font-weight:600;text-decoration:none;margin-bottom:18px}
+ol{text-align:left;color:#3B1E2A;padding-left:20px;margin:0 0 16px}li{margin:6px 0}.t{background:#F7DCE1;border-radius:14px;padding:12px 14px;text-align:left;font-size:.9rem}.f{margin-top:18px;font-size:.78rem;color:#7F5F6B}
+</style></head><body><main id="m"><img class="lg" src="icons/logo.png" alt="MiFardo"><p id="msg" class="k">Preparando tu QR...</p></main>
+<script>
+const $=s=>document.querySelector(s),H=new URLSearchParams(location.hash.slice(1)),P=H.get('p');
+const lib=(u,ok)=>new Promise((res,rej)=>{let i=0;const t=()=>{if(ok())return res();if(i>=u.length)return rej();const e=document.createElement('script');e.src=u[i++];e.onload=()=>ok()?res():t();e.onerror=t;document.head.appendChild(e)};t()});
+const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+(async()=>{const m=$('#m'),er=x=>$('#msg').textContent=x;
+if(!P)return er('Este enlace de pago no es válido. Pide que te lo envíen de nuevo.');
+try{await lib(['https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js','https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js'],()=>window.qrcode)}catch(e){return er('No se pudo cargar el QR. Revisa tu conexión a internet y recarga la página.')}
+try{if(qrcode.stringToBytesFuncs&&qrcode.stringToBytesFuncs['UTF-8'])qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8']}catch(e){}
+let q=null;for(const l of['M','L']){try{const z=qrcode(0,l);z.addData(P);z.make();q=z;break}catch(e){}}
+if(!q)return er('No se pudo generar el QR.');
+const n=q.getModuleCount(),c=10,g=4,s=(n+g*2)*c,cv=document.createElement('canvas');cv.width=cv.height=s;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,s,s);x.fillStyle='#000';
+for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+g)*c,(r+g)*c,c,c);
+const u=cv.toDataURL('image/png'),b=H.get('b')||'tu vendedora';
+m.replaceChildren(m.querySelector('.lg'),E('p','k','Pago a'),E('h1','',b),E('p','am',H.get('m')||''),E('p','k',[H.get('c'),H.get('n')&&'Para: '+H.get('n')].filter(Boolean).join(' · ')));
+const w=E('div','qr'),i=E('img');i.src=u;i.alt='Código QR de pago';w.append(i);m.append(w);
+const a=E('a','b','Guardar imagen del QR');a.href=u;a.download='qr-pago.png';m.append(a);
+const o=E('ol');['Guarda la imagen del QR en tu galería.','Abre la app de tu banco y elige pagar con QR.','Sube la imagen desde la galería (o escanea este QR desde otro celular).','Escribe el monto que ves arriba y confirma.'].forEach(t=>o.append(E('li','',t)));m.append(o);
+m.append(E('div','t','Antes de confirmar, revisa que tu banco muestre el nombre del titular esperado: '+b+'.'),E('p','f','Generado con MiFardo. Este enlace no guarda tus datos.'))})();
+</script></body></html>

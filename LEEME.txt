@@ -1,0 +1,10 @@
+MIFARDO
+  index.html, style.css, app.js     Aplicación
+  pago.html                         Página de pago que ve la compradora
+  js/config.js                      URL y clave pública de Supabase (editar)
+  js/auth.js                        Login, estado de la cuenta, contador y alta de usuarias
+  js/admin.js                       Panel de administración (solo rol admin)
+  supabase/schema.sql               Tablas y reglas de seguridad
+  supabase/admin.sql                Te convierte en administradora
+  supabase/README.md                Guía de configuración
+Abrir: VS Code + extensión Live Server.
