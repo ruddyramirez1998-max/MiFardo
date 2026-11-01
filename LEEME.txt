@@ -1,10 +1,15 @@
 MIFARDO
-  index.html, style.css, app.js     Aplicación
-  pago.html                         Página de pago que ve la compradora
-  js/config.js                      URL y clave pública de Supabase (editar)
-  js/auth.js                        Login, estado de la cuenta, contador y alta de usuarias
-  js/admin.js                       Panel de administración (solo rol admin)
-  supabase/schema.sql               Tablas y reglas de seguridad
-  supabase/admin.sql                Te convierte en administradora
-  supabase/README.md                Guía de configuración
-Abrir: VS Code + extensión Live Server.
+  index.html, style.css, manifest.json, sw.js   Estructura de la aplicación web (PWA)
+  pago.html                                     Página de pago que ve la compradora
+  icons/                                        Logo e iconos
+  js/config.js                                  URL y clave pública de Supabase
+  js/auth.js                                    Inicio de sesión (administradora y usuarias)
+  js/admin.js                                   Panel de administración (solo la administradora)
+  js/app/                                       Pantallas y lógica, un archivo por módulo:
+      nucleo.js (utilidades y base local), inicio, live, ventas, fardos, prendas,
+      compradoras, pagos, entregas, etiquetas, remate, finanzas, reportes, respaldo,
+      fotos-y-ventanas, ajustes-y-qr, qr-al-vender, enlace-de-pago, acceso, router, arranque
+  supabase/schema.sql                           Tablas, funciones y reglas de seguridad
+  supabase/admin.sql                            Te convierte en administradora
+  supabase/README.md                            Guía de configuración
+El orden de los scripts en index.html importa: nucleo.js va primero y arranque.js al final.
