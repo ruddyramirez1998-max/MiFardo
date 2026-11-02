@@ -102,3 +102,5 @@ body.locked{overflow:hidden}
 .step{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.step:last-child{border:0}.step h2{margin-bottom:2px}
 .step>b{flex:none;width:34px;height:34px;border-radius:50%;background:var(--blush);color:var(--accent-d);display:grid;place-items:center;font:600 1.05rem var(--serif)}
 .card>label.chk{margin-top:2px}
+
+.sp ol{padding-left:20px;margin:8px 0 14px}.sp li{margin:6px 0}
